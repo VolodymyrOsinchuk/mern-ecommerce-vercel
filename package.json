@@ -1,5 +1,6 @@
 {
   "name": "create-react-app",
+  "proxy": "https://mern-tuto-back1.herokuapp.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,7 +11,7 @@
   },
   "scripts": {
     "dev": "concurrently \"BROWSER=none react-scripts start\" \"yarn run server\"",
-    "start": "concurrently \"react-scripts start\" \"yarn run server\"",
+    "start": "react-scripts start",
     "server": "cd server && nodemon index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",

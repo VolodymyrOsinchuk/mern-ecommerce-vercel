@@ -1,12 +1,18 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import Menu from "./components/Menu";
 import Home from "./pages/Home";
+import Users from "./user/Users";
 
 const MainRouter = () => {
   return (
-    <Switch>
-      <Route exact path="/" component={Home} />
-    </Switch>
+    <div>
+      <Menu />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/users" component={Users} />
+      </Switch>
+    </div>
   );
 };
 

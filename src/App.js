@@ -1,10 +1,16 @@
 import React from "react";
+import MainRouter from "./MainRouter";
+import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "./theme";
 
 const App = () => {
   return (
-    <div>
-      <h1>Hello Volo</h1>
-    </div>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <MainRouter />
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 

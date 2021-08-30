@@ -1,12 +1,16 @@
 {
   "name": "create-react-app",
-  "proxy": "https://mern-tuto-back1.herokuapp.com",
+  "proxy": "https://mern-tuto-back.herokuapp.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "nodemon": "^2.0.7",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
+    "@material-ui/styles": "^4.11.4",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
+    "react-router-dom": "^5.2.1",
     "react-scripts": "2.1.1"
   },
   "scripts": {

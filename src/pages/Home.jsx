@@ -33,7 +33,7 @@ const Home = () => {
         image={himalayas}
         title="Himalayas"
       />
-      <CardContent variant="body2" component="p">
+      <CardContent variant="body2" component="h6">
         <Typography>Bienvenue sur Home page</Typography>
       </CardContent>
     </Card>

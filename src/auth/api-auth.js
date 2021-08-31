@@ -1,4 +1,4 @@
-import API from "../config";
+import { API } from "../config";
 
 const login = async (user) => {
   try {
@@ -8,12 +8,12 @@ const login = async (user) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      credentials: "include",
+      // credentials: "include",
       body: JSON.stringify(user),
     });
     return await response.json();
   } catch (err) {
-    console.err("login error: " + err.message);
+    console.err("login error: " + err);
   }
 };
 

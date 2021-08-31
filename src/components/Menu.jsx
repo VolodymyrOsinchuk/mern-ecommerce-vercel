@@ -31,6 +31,12 @@ const Menu = withRouter(({ history }) => (
       <Link to="/users">
         <Button style={isActive(history, "/users")}>Users</Button>
       </Link>
+      <Link to="/register">
+        <Button style={isActive(history, "/register")}>Register</Button>
+      </Link>
+      <Link to="/login">
+        <Button style={isActive(history, "/login")}>Login</Button>
+      </Link>
     </Toolbar>
   </AppBar>
 ));

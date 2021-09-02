@@ -33,6 +33,9 @@ const list = async (signal) => {
 };
 
 const read = async (userId, token, signal) => {
+  // console.log("userId", userId);
+  // console.log("token", token);
+  // console.log("signal", signal);
   try {
     let response = await fetch(`${API}/api/user/${userId}`, {
       method: "GET",
@@ -45,7 +48,7 @@ const read = async (userId, token, signal) => {
     });
     return await response.json();
   } catch (err) {
-    console.err("read user error: " + err.message);
+    console.log("read user error: " + err);
   }
 };
 

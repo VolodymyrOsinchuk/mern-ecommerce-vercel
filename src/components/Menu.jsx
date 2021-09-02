@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { Link, withRouter } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
+import { isAuthenticated, clearJWT } from "../auth/auth-helper";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
@@ -31,12 +32,38 @@ const Menu = withRouter(({ history }) => (
       <Link to="/users">
         <Button style={isActive(history, "/users")}>Users</Button>
       </Link>
-      <Link to="/register">
-        <Button style={isActive(history, "/register")}>Register</Button>
-      </Link>
-      <Link to="/login">
-        <Button style={isActive(history, "/login")}>Login</Button>
-      </Link>
+      {!isAuthenticated() && (
+        <span>
+          <Link to="/register">
+            <Button style={isActive(history, "/register")}>Register</Button>
+          </Link>
+          <Link to="/login">
+            <Button style={isActive(history, "/login")}>Login</Button>
+          </Link>
+        </span>
+      )}
+      {isAuthenticated() && (
+        <span>
+          <Link to={`/profile/${isAuthenticated().user._id}`}>
+            <Button
+              style={isActive(
+                history,
+                `/profile/${isAuthenticated().user._id}`
+              )}
+            >
+              Mon Profile
+            </Button>
+          </Link>
+          <Button
+            color="inherit"
+            onClick={() => {
+              clearJWT(() => history.push("/"));
+            }}
+          >
+            Login
+          </Button>
+        </span>
+      )}
     </Toolbar>
   </AppBar>
 ));

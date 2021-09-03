@@ -60,7 +60,7 @@ const Menu = withRouter(({ history }) => (
               clearJWT(() => history.push("/"));
             }}
           >
-            Login
+            Se deconnecter
           </Button>
         </span>
       )}

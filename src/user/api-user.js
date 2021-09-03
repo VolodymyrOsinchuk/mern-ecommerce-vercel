@@ -35,7 +35,7 @@ const list = async (signal) => {
 const read = async (userId, token, signal) => {
   // console.log("userId", userId);
   // console.log("token", token);
-  // console.log("signal", signal);
+  console.log("signal read", signal);
   try {
     let response = await fetch(`${API}/api/user/${userId}`, {
       method: "GET",
@@ -53,12 +53,12 @@ const read = async (userId, token, signal) => {
 };
 
 const update = async (userId, token, user) => {
+  console.log("user update >>>>", user);
   try {
     let response = await fetch(`${API}/api/user/${userId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(user),

@@ -12,6 +12,7 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import { clearJWT, isAuthenticated } from "../auth/auth-helper.js";
 import { remove } from "./api-user.js";
+import { Redirect } from "react-router-dom";
 
 const DeleteUser = (props) => {
   const [open, setOpen] = useState(false);
@@ -38,6 +39,11 @@ const DeleteUser = (props) => {
       }
     });
   };
+
+  if (redirect) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <span>
       <IconButton color="secondary" onClick={clickButton}>
@@ -45,10 +51,12 @@ const DeleteUser = (props) => {
       </IconButton>
 
       <Dialog open={open} onClose={handleRequestClose}>
-        <DialogTitle>{"Supprimer le compte"}</DialogTitle>
+        <DialogTitle style={{ margin: "auto" }}>
+          {"Supprimer le compte"}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Confirmer supprimer votre compte
+            Vous confirmez suppression de votre compte?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

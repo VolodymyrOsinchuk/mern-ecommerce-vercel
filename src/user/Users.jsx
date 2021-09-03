@@ -57,7 +57,7 @@ const Users = () => {
         {users.map((user, i) => {
           console.log("user", user);
           return (
-            <Link to={`/user/${user._id}`} key={i}>
+            <Link to={`/profile/${user._id}`} key={i}>
               <ListItem button>
                 <ListItemAvatar>
                   <Avatar>

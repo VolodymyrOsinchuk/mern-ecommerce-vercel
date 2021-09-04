@@ -61,7 +61,7 @@ const update = async (userId, token, user) => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(user),
+      body: user,
     });
     return await response.json();
   } catch (err) {
@@ -85,4 +85,40 @@ const remove = async (userId, token) => {
   }
 };
 
-export { create, list, read, update, remove };
+const follow = async (userId, token, followId) => {
+  // console.log("user update >>>>", user);
+  try {
+    let response = await fetch(`${API}/api/users/follow`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ userId, followId }),
+    });
+    return await response.json();
+  } catch (err) {
+    console.err("follow error: " + err.message);
+  }
+};
+
+const unfollow = async (userId, token, unfollowId) => {
+  // console.log("user update >>>>", user);
+  try {
+    let response = await fetch(`${API}/api/users/unfollow`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ userId, unfollowId }),
+    });
+    return await response.json();
+  } catch (err) {
+    console.err("unfollow error: " + err.message);
+  }
+};
+
+export { create, list, read, update, remove, follow, unfollow };

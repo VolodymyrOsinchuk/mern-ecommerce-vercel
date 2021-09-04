@@ -7,12 +7,14 @@ import {
   Typography,
   TextField,
   Icon,
+  Avatar,
 } from "@material-ui/core";
 import BackupIcon from "@material-ui/icons/Backup";
 import { makeStyles } from "@material-ui/core/styles";
 import { isAuthenticated } from "../auth/auth-helper.js";
 import { read, update } from "./api-user";
 import { Redirect } from "react-router-dom";
+import { API } from "../config.js";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -45,6 +47,11 @@ const useStyles = makeStyles((theme) => ({
   filename: {
     marginLeft: 10,
   },
+  bigAvatar: {
+    margin: "auto",
+    width: 60,
+    height: 60,
+  },
 }));
 
 const EditProfile = ({ match }) => {
@@ -75,7 +82,7 @@ const EditProfile = ({ match }) => {
       } else {
         setValues({
           ...values,
-          _id: data._id,
+          id: data._id,
           name: data.name,
           email: data.email,
           about: data.about,
@@ -100,7 +107,7 @@ const EditProfile = ({ match }) => {
       if (data && data.error) {
         setValues({ ...values, error: data.error });
       } else {
-        setValues({ ...values, userId: data._id, redirectToProfile: true });
+        setValues({ ...values, redirectToProfile: true });
       }
     });
   };
@@ -109,6 +116,10 @@ const EditProfile = ({ match }) => {
     const value = name === "photo" ? event.target.files[0] : event.target.value;
     setValues({ ...values, [name]: value });
   };
+
+  const photoUrl = userId
+    ? `${API}/api/user/photo/${userId}`
+    : `${API}/images/photo_profile.png`;
 
   if (values.redirectToProfile) {
     return <Redirect to={`/profile/${userId}`} />;
@@ -119,6 +130,7 @@ const EditProfile = ({ match }) => {
         <Typography variant="h5" className={classes.title}>
           Edit profile
         </Typography>
+        <Avatar src={photoUrl} className={classes.bigAvatar} /> <br />
         <form noValidate>
           <input
             accept="image/*"

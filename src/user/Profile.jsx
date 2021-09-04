@@ -17,6 +17,7 @@ import DeleteUser from "./DeleteUser.jsx";
 import { isAuthenticated } from "../auth/auth-helper.js";
 import { read } from "./api-user.js";
 import { Edit, Person } from "@material-ui/icons";
+import { API } from "../config.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,12 +34,16 @@ const useStyles = makeStyles((theme) => ({
 const Profile = ({ match }) => {
   const classes = useStyles();
   const [user, setUser] = useState({});
+  const [values, setValues] = useState({
+    fallowing: false,
+  });
   const [redirectToLogin, setRedirectToLogin] = useState(false);
+
   const userId = match.params.userId;
-  const { token } = isAuthenticated();
-  // console.log("token", token);
-  // console.log("match", match);
-  // console.log("userId", userId);
+  const {
+    token,
+    user: { _id },
+  } = isAuthenticated();
 
   useEffect(() => {
     const abordController = new AbortController();
@@ -47,6 +52,8 @@ const Profile = ({ match }) => {
       if (data && data.error) {
         setRedirectToLogin(true);
       } else {
+        let following = checkFollow(data);
+        setValues({ ...values, user: data, following: following });
         setUser(data);
       }
     });
@@ -56,10 +63,21 @@ const Profile = ({ match }) => {
     };
   }, [userId]);
 
+  const checkFollow = (user) => {
+    const match = user.followers.some((follower) => {
+      return follower._id === _id;
+    });
+    return match;
+  };
+
   if (redirectToLogin) {
     return <Redirect to="/login" />;
   }
 
+  const photoUrl = userId
+    ? `${API}/api/user/photo/${userId}`
+    : `${API}/images/photo_profile.png`;
+  // https://mern-tuto-back.herokuapp.com/images/photo_profile.png
   return (
     <Paper elevation={4} className={classes.root}>
       <Typography variant="h6" align="center" className={classes.title}>
@@ -68,7 +86,7 @@ const Profile = ({ match }) => {
       <List dense>
         <ListItem>
           <ListItemAvatar>
-            <Avatar>
+            <Avatar src={photoUrl}>
               <Person />
             </Avatar>
           </ListItemAvatar>
@@ -95,6 +113,7 @@ const Profile = ({ match }) => {
             ).toLocaleDateString()} `}
           />
         </ListItem>
+        <Divider />
       </List>
       {/* {JSON.stringify(user)} */}
     </Paper>

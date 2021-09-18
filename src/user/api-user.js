@@ -86,7 +86,7 @@ const remove = async (userId, token) => {
 };
 
 const follow = async (userId, token, followId) => {
-  // console.log("user update >>>>", user);
+  console.log("follow >>>>", userId, token, followId);
   try {
     let response = await fetch(`${API}/api/users/follow`, {
       method: "PUT",
@@ -104,7 +104,7 @@ const follow = async (userId, token, followId) => {
 };
 
 const unfollow = async (userId, token, unfollowId) => {
-  // console.log("user update >>>>", user);
+  console.log("unfollow >>>>", userId, token, unfollowId);
   try {
     let response = await fetch(`${API}/api/users/unfollow`, {
       method: "PUT",

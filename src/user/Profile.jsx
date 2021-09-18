@@ -18,6 +18,8 @@ import { isAuthenticated } from "../auth/auth-helper.js";
 import { read } from "./api-user.js";
 import { Edit, Person } from "@material-ui/icons";
 import { API } from "../config.js";
+import FollowProfileButton from "./FollowProfileButton";
+import ProfileTabs from "./ProfileTabs.jsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,17 +34,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = ({ match }) => {
+  console.log("Profile match ", match);
   const classes = useStyles();
   const [user, setUser] = useState({});
   const [values, setValues] = useState({
-    fallowing: false,
+    user: { following: [], followers: [] },
+    following: false,
   });
   const [redirectToLogin, setRedirectToLogin] = useState(false);
+
+  // let following = checkFollow(data);
 
   const userId = match.params.userId;
   const {
     token,
-    user: { _id },
+    // user: { _id },
   } = isAuthenticated();
 
   useEffect(() => {
@@ -63,9 +69,25 @@ const Profile = ({ match }) => {
     };
   }, [userId]);
 
+  const clickFollowButton = (callApi) => {
+    callApi(userId, token, userId).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({
+          ...values,
+          user: data,
+          following: !values.following,
+        });
+      }
+    });
+  };
+
+  // const following = checkFollow(user);
+
   const checkFollow = (user) => {
     const match = user.followers.some((follower) => {
-      return follower._id === _id;
+      return follower._id === userId;
     });
     return match;
   };
@@ -91,7 +113,7 @@ const Profile = ({ match }) => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary={user.name} secondary={user.email} />
-          {isAuthenticated().user && isAuthenticated().user._id === user._id && (
+          {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
             <ListItemSecondaryAction>
               <Link to={`/profile/edit/${user._id}`}>
                 <IconButton color="primary">
@@ -100,6 +122,11 @@ const Profile = ({ match }) => {
               </Link>
               <DeleteUser userId={user._id} />
             </ListItemSecondaryAction>
+          ) : (
+            <FollowProfileButton
+              following={values.following}
+              onButtonClick={clickFollowButton}
+            />
           )}
         </ListItem>
         <Divider />
@@ -115,7 +142,7 @@ const Profile = ({ match }) => {
         </ListItem>
         <Divider />
       </List>
-      {/* {JSON.stringify(user)} */}
+      <ProfileTabs user={values.user} />
     </Paper>
   );
 };

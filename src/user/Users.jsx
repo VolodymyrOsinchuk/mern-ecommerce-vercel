@@ -33,7 +33,7 @@ const Users = () => {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
-    console.log("signal", signal);
+    // console.log("signal", signal);
 
     list(signal).then((data) => {
       if (data && data.error) {
@@ -55,7 +55,6 @@ const Users = () => {
       </Typography>
       <List dense>
         {users.map((user, i) => {
-          console.log("user", user);
           return (
             <Link to={`/profile/${user._id}`} key={i}>
               <ListItem button>

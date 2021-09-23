@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = ({ match }) => {
-  console.log("Profile match ", match);
+  // console.log("Profile match ", match);
   const classes = useStyles();
   const [user, setUser] = useState({});
   const [values, setValues] = useState({

@@ -35,7 +35,7 @@ const list = async (signal) => {
 const read = async (userId, token, signal) => {
   // console.log("userId", userId);
   // console.log("token", token);
-  console.log("signal read", signal);
+  // console.log("signal read", signal);
   try {
     let response = await fetch(`${API}/api/user/${userId}`, {
       method: "GET",
@@ -121,4 +121,22 @@ const unfollow = async (userId, token, unfollowId) => {
   }
 };
 
-export { create, list, read, update, remove, follow, unfollow };
+const findPeople = async (userId, token, signal) => {
+  console.log("findPeople >>>>", userId, token, signal);
+  try {
+    let response = await fetch(`${API}/user/findpeople/${userId}`, {
+      method: "GET",
+      signal: signal,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return await response.json();
+  } catch (err) {
+    console.err("unfollow error: " + err.message);
+  }
+};
+
+export { create, list, read, update, remove, follow, unfollow, findPeople };

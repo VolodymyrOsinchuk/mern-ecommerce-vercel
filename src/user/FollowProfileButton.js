@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { unfollow, follow } from "./api-user";
 
 const FollowProfileButton = (props) => {
-  console.log("followButton props", props);
+  // console.log("followButton props", props);
   const followClick = () => {
     props.onButtonClick(follow);
   };

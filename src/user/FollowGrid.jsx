@@ -1,14 +1,37 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Avatar, GridList, GridListTile, Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import {
+  Avatar,
+  ImageList,
+  ImageListItem,
+  Typography,
+} from "@material-ui/core";
+import { API } from "../config.js";
 
 const useStyle = makeStyles((theme) => ({
   root: {
     paddingTop: theme.spacing(2),
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    background: theme.palette.background.paper,
   },
-  gridList: {},
+  gridList: {
+    width: 500,
+    height: 220,
+  },
+  titleText: {
+    textAlign: "center",
+    marginTop: 10,
+  },
+  bigAvatar: {
+    width: 60,
+    height: 60,
+    margin: "auto",
+  },
 }));
 
 const FollowGrid = (props) => {
@@ -17,19 +40,24 @@ const FollowGrid = (props) => {
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={160} className={classes.gridList} cols={4}>
+      <ImageList rowHeight={160} className={classes.gridList} cols={4}>
         {props.people.map((person, i) => {
           console.log("person", person);
           return (
-            <GridListTile key={i}>
-              <Link to={`/user/${person._id}`}>
-                <Avatar src={`/api/users/photo/${person._id}`} />
-                <Typography>{person.name}</Typography>
+            <ImageListItem key={i} style={{ height: 120 }}>
+              <Link to={`/profile/${person._id}`}>
+                <Avatar
+                  src={`${API}/api/user/photo/${person._id}`}
+                  className={classes.bigAvatar}
+                />
+                <Typography className={classes.titleText}>
+                  {person.name}
+                </Typography>
               </Link>
-            </GridListTile>
+            </ImageListItem>
           );
         })}
-      </GridList>
+      </ImageList>
     </div>
   );
 };

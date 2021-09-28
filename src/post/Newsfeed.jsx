@@ -40,6 +40,7 @@ const Newsfeed = () => {
   const removePost = (post) => {
     const updatePost = [...posts];
     const index = updatePost.indexOf(post);
+    console.log("index removePost", index);
     updatePost.splice(index, 1);
     setPosts(updatePost);
   };
@@ -48,6 +49,7 @@ const Newsfeed = () => {
     <div>
       <Card>
         <Typography type="title">Newsfeed</Typography>
+        {JSON.stringify(posts)}
         <Divider />
         <NewPost addUpdate={addPost} />
         <Divider />

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const PostList = (props) => {
+  console.log("postlist props", props);
   return (
     <div style={{ marginTop: 24 }}>
       {props.posts.map((item, i) => {

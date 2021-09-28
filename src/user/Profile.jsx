@@ -17,9 +17,10 @@ import DeleteUser from "./DeleteUser.jsx";
 import { isAuthenticated } from "../auth/auth-helper.js";
 import { read } from "./api-user.js";
 import { Edit, Person } from "@material-ui/icons";
-import { API } from "../config.js";
 import FollowProfileButton from "./FollowProfileButton";
 import ProfileTabs from "./ProfileTabs.jsx";
+import { listByUser } from "../post/api-post";
+import { API } from "../config.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,7 @@ const Profile = ({ match }) => {
   // console.log("Profile match ", match);
   const classes = useStyles();
   const [user, setUser] = useState({});
+  const [posts, setPosts] = useState([]);
   const [values, setValues] = useState({
     user: { following: [], followers: [] },
     following: false,
@@ -68,6 +70,16 @@ const Profile = ({ match }) => {
       abordController.abort();
     };
   }, [userId]);
+
+  const loadPosts = (user) => {
+    listByUser(userId, token).then((data) => {
+      if (data.error) {
+        console.log("data.error loadPosts", data.error);
+      } else {
+        setPosts(data);
+      }
+    });
+  };
 
   const clickFollowButton = (callApi) => {
     callApi(userId, token, userId).then((data) => {
@@ -105,6 +117,7 @@ const Profile = ({ match }) => {
       <Typography variant="h6" align="center" className={classes.title}>
         Profile
       </Typography>
+      {JSON.stringify(posts)}
       <List dense>
         <ListItem>
           <ListItemAvatar>

@@ -49,4 +49,40 @@ const listByUser = async (userId, token) => {
   }
 };
 
-export { listNewsFeed, listByUser, create };
+const deletePost = async () => {};
+
+const like = async (userId, token, postId) => {
+  try {
+    let response = await fetch(`${API}/posts/like`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userId, postId),
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("like error: " + error.message);
+  }
+};
+
+const comment = async (userId, token, postId, comment) => {
+  try {
+    let response = await fetch(`${API}/posts/comment`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userId, postId, comment),
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("comment error: " + error.message);
+  }
+};
+
+export { listNewsFeed, listByUser, create, deletePost, like, comment };

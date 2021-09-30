@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Avatar,
   Card,
@@ -8,12 +9,12 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { isAuthenticated } from "../auth/auth-helper";
 import { Comment, Delete, Favorite, FavoriteBorder } from "@material-ui/icons";
-import { deletePost } from "./api-post";
-import { Link } from "react-router-dom";
+import { remove, like, unlike } from "./api-post";
 import { API } from "../config";
-import { makeStyles } from "@material-ui/core";
+import Comments from "./Comments";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -48,6 +49,10 @@ const Post = (props) => {
         props.onRemove(props.post);
       }
     });
+  };
+
+  const updateComments = (comments) => {
+    setValues({ ...values, comments: comments });
   };
 
   const checkLike = (like) => {
@@ -116,7 +121,11 @@ const Post = (props) => {
         </IconButton>
         <span>{values.comments.length}</span>
       </CardActions>
-      <Comments />
+      <Comments
+        postId={props.post._id}
+        comments={values.comments}
+        updateComments={updateComments}
+      />
     </Card>
   );
 };

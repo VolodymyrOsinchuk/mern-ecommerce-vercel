@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import { create } from "./api-post";
 import { isAuthenticated } from "../auth/auth-helper";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  IconButton,
+  TextField,
+} from "@material-ui/core";
+import { PhotoCamera } from "@material-ui/icons";
 
 const NewPost = (props) => {
   const [values, setValues] = useState({
     text: "",
     photo: "",
     error: "",
+    user: {},
   });
 
   const {
@@ -29,7 +40,26 @@ const NewPost = (props) => {
     });
   };
 
-  return <div></div>;
+  return (
+    <div>
+      <Card>
+        <CardHeader />
+        <CardContent>
+          <TextField />
+          <input />
+          <label>
+            <IconButton>
+              <PhotoCamera />
+            </IconButton>
+          </label>
+          <span></span>
+        </CardContent>
+        <CardActions>
+          <Button>POST</Button>
+        </CardActions>
+      </Card>
+    </div>
+  );
 };
 
 export default NewPost;

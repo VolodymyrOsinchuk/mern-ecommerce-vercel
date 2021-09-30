@@ -13,12 +13,19 @@ import {
   Typography,
 } from "@material-ui/core";
 import { findPeople } from "./api-user";
-import ViewIcon from "@mui/icons-material/Visibility";
+import ViewIcon from "@material-ui/icons/Visibility";
+import { isAuthenticated } from "../auth/auth-helper";
 
 const FindPeople = () => {
   const [values, setValues] = useState({
     users: [],
   });
+
+  const {
+    token,
+    user: { _id },
+  } = isAuthenticated();
+  const userId = _id;
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -43,15 +50,16 @@ const FindPeople = () => {
         <Typography>Who to follow</Typography>
         <List>
           {values.users.map((item, i) => {
+            console.log("item users", item);
             return (
-              <span>
+              <span key={i}>
                 <ListItem>
                   <ListItemAvatar>
                     <Avatar />
                   </ListItemAvatar>
                   <ListItemText>
                     <ListItemSecondaryAction>
-                      <Link>
+                      <Link to="/">
                         <IconButton>
                           <ViewIcon />
                         </IconButton>

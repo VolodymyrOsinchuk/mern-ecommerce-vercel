@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Card, Divider, Typography } from "@material-ui/core";
+import { Card, Divider, Typography, Divider } from "@material-ui/core";
 import { listNewsFeed } from "./api-post";
 import { isAuthenticated } from "../auth/auth-helper";
+import { makeStyles } from "@material-ui/core/styles";
+import PostList from "./PostList";
+import NewPost from "./NewPost";
+
+const useStyles = makeStyles((theme) => ({}));
 
 const Newsfeed = () => {
+  const classes = useStyles();
   const [posts, setPosts] = useState([]);
 
   const {

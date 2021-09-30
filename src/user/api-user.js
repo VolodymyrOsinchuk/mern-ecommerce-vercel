@@ -12,7 +12,7 @@ const create = async (user) => {
     });
     return await response.json();
   } catch (err) {
-    console.err("create user error: " + err.message);
+    console.error("create user error: " + err.message);
   }
 };
 
@@ -28,7 +28,7 @@ const list = async (signal) => {
     });
     return await response.json();
   } catch (err) {
-    console.err("list user error: " + err.message);
+    console.error("list user error: " + err.message);
   }
 };
 
@@ -65,7 +65,7 @@ const update = async (userId, token, user) => {
     });
     return await response.json();
   } catch (err) {
-    console.err("update user error: " + err.message);
+    console.error("update user error: " + err.message);
   }
 };
 
@@ -81,7 +81,7 @@ const remove = async (userId, token) => {
     });
     return await response.json();
   } catch (err) {
-    console.err("delete user error: " + err.message);
+    console.error("delete user error: " + err.message);
   }
 };
 
@@ -99,7 +99,7 @@ const follow = async (userId, token, followId) => {
     });
     return await response.json();
   } catch (err) {
-    console.err("follow error: " + err.message);
+    console.error("follow error: " + err.message);
   }
 };
 
@@ -117,14 +117,14 @@ const unfollow = async (userId, token, unfollowId) => {
     });
     return await response.json();
   } catch (err) {
-    console.err("unfollow error: " + err.message);
+    console.error("unfollow error: " + err.message);
   }
 };
 
 const findPeople = async (userId, token, signal) => {
   console.log("findPeople >>>>", userId, token, signal);
   try {
-    let response = await fetch(`${API}/user/findpeople/${userId}`, {
+    let response = await fetch(`${API}/api/user/findpeople/${userId}`, {
       method: "GET",
       signal: signal,
       headers: {
@@ -135,7 +135,7 @@ const findPeople = async (userId, token, signal) => {
     });
     return await response.json();
   } catch (err) {
-    console.err("unfollow error: " + err.message);
+    console.error("unfollow error: " + err.message);
   }
 };
 

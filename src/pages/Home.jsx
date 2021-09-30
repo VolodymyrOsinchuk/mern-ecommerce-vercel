@@ -1,7 +1,10 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Grid, makeStyles } from "@material-ui/core";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import himalayas from "../images/himalayas.jpg";
+import Newsfeed from "../post/NewPost";
+import FindPeople from "../user/FindPeople";
+import { isAuthenticated } from "../auth/auth-helper";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -20,23 +23,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = () => {
+const Home = ({ history }) => {
+  console.log("Home history", history);
   const classes = useStyles();
+  const [defaultPage, setDefaultPage] = useState(false);
+
+  useEffect(() => {
+    setDefaultPage(isAuthenticated());
+    const unlisten = history.listen(() => {
+      setDefaultPage(isAuthenticated());
+    });
+
+    // console.log("unlisten", unlisten);
+    return () => {
+      unlisten();
+    };
+  }, []);
 
   return (
-    <Card className={classes.card}>
-      <Typography variant="h6" className={classes.title}>
-        Home Page
-      </Typography>
-      <CardMedia
-        className={classes.media}
-        image={himalayas}
-        title="Himalayas"
-      />
-      <CardContent variant="body2" component="h6">
-        <Typography>Bienvenue sur Home page</Typography>
-      </CardContent>
-    </Card>
+    <div>
+      {!defaultPage && (
+        <Card className={classes.card}>
+          <Typography variant="h6" className={classes.title}>
+            Home Page
+          </Typography>
+          <CardMedia
+            className={classes.media}
+            image={himalayas}
+            title="Himalayas"
+          />
+          <CardContent variant="body2" component="h6">
+            <Typography>Bienvenue sur Home page</Typography>
+          </CardContent>
+        </Card>
+      )}
+      {defaultPage && (
+        <Grid container spacing={8}>
+          <Grid item xs={8} sm={7}>
+            <Newsfeed />
+          </Grid>
+          <Grid item xs={6} sm={5}>
+            <FindPeople />
+          </Grid>
+        </Grid>
+      )}
+    </div>
   );
 };
 

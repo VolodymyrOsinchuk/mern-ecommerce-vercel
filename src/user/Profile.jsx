@@ -37,10 +37,11 @@ const useStyles = makeStyles((theme) => ({
 const Profile = ({ match }) => {
   // console.log("Profile match ", match);
   const classes = useStyles();
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
   const [values, setValues] = useState({
     user: { following: [], followers: [] },
+    redirectToLogin: false,
     following: false,
   });
   const [redirectToLogin, setRedirectToLogin] = useState(false);
@@ -56,13 +57,14 @@ const Profile = ({ match }) => {
   useEffect(() => {
     const abordController = new AbortController();
     const signal = abordController.signal;
+
     read(userId, token, signal).then((data) => {
       if (data && data.error) {
         setRedirectToLogin(true);
       } else {
         let following = checkFollow(data);
         setValues({ ...values, user: data, following: following });
-        setUser(data);
+        loadPosts(data._id);
       }
     });
 
@@ -72,13 +74,21 @@ const Profile = ({ match }) => {
   }, [userId]);
 
   const loadPosts = (user) => {
-    listByUser(userId, token).then((data) => {
+    listByUser({ userId: user }, token).then((data) => {
+      console.log("data loadPosts >>>> ", data);
       if (data.error) {
         console.log("data.error loadPosts", data.error);
       } else {
         setPosts(data);
       }
     });
+  };
+
+  const removePost = (post) => {
+    const updatePosts = posts;
+    const index = updatePosts.indexOf(post);
+    updatePosts.slice(index, 1);
+    setPosts(updatePosts);
   };
 
   const clickFollowButton = (callApi) => {
@@ -125,15 +135,19 @@ const Profile = ({ match }) => {
               <Person />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={user.name} secondary={user.email} />
-          {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
+          <ListItemText
+            primary={values.user.name}
+            secondary={values.user.email}
+          />
+          {isAuthenticated().user &&
+          isAuthenticated().user._id === values.user._id ? (
             <ListItemSecondaryAction>
-              <Link to={`/profile/edit/${user._id}`}>
+              <Link to={`/profile/edit/${values.user._id}`}>
                 <IconButton color="primary">
                   <Edit />
                 </IconButton>
               </Link>
-              <DeleteUser userId={user._id} />
+              <DeleteUser userId={values.user._id} />
             </ListItemSecondaryAction>
           ) : (
             <FollowProfileButton
@@ -144,18 +158,22 @@ const Profile = ({ match }) => {
         </ListItem>
         <Divider />
         <ListItem>
-          <ListItemText primary={user.about} />
+          <ListItemText primary={values.user.about} />
         </ListItem>
         <ListItem>
           <ListItemText
             primary={`Rejoint: ${new Date(
-              user.createdAt
+              values.user.createdAt
             ).toLocaleDateString()} `}
           />
         </ListItem>
         <Divider />
       </List>
-      <ProfileTabs user={values.user} />
+      <ProfileTabs
+        user={values.user}
+        posts={posts}
+        removePostUpdate={removePost}
+      />
     </Paper>
   );
 };

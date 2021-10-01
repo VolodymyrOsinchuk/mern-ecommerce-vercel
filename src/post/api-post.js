@@ -119,4 +119,30 @@ const comment = async (userId, token, postId, comment) => {
   }
 };
 
-export { listNewsFeed, listByUser, create, remove, like, unlike, comment };
+const uncomment = async (userId, token, postId, comment) => {
+  try {
+    let response = await fetch(`${API}/api/posts/uncomment`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userId, postId, comment),
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("comment error: " + error.message);
+  }
+};
+
+export {
+  listNewsFeed,
+  listByUser,
+  create,
+  remove,
+  like,
+  unlike,
+  comment,
+  uncomment,
+};

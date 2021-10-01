@@ -106,7 +106,7 @@ const Profile = ({ match }) => {
   };
 
   // const following = checkFollow(user);
-
+  console.log("values.user", values.user);
   const checkFollow = (user) => {
     const match = user.followers.some((follower) => {
       return follower._id === userId;
@@ -127,7 +127,6 @@ const Profile = ({ match }) => {
       <Typography variant="h6" align="center" className={classes.title}>
         Profile
       </Typography>
-      {JSON.stringify(posts)}
       <List dense>
         <ListItem>
           <ListItemAvatar>
@@ -163,7 +162,7 @@ const Profile = ({ match }) => {
         <ListItem>
           <ListItemText
             primary={`Rejoint: ${new Date(
-              values.user.createdAt
+              values.user.created
             ).toLocaleDateString()} `}
           />
         </ListItem>

@@ -10,7 +10,7 @@ import {
 import { isAuthenticated } from "../auth/auth-helper";
 import { makeStyles } from "@material-ui/core";
 import { API } from "../config";
-import { comment } from "./api-post";
+import { comment, uncomment } from "./api-post";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,16 +50,15 @@ const Comments = (props) => {
     }
   };
 
-
-  const deleteComment = comment => event => {
+  const deleteComment = (comment) => (event) => {
     uncomment(_id, token, props.postId, comment).then((data) => {
       if (data.error) {
-        console.log('deleteComment data.error', data.error);
+        console.log("deleteComment data.error", data.error);
       } else {
         props.updateComments(data.comments);
       }
-    })
-  }
+    });
+  };
 
   const commentBody = (item) => {
     return (
@@ -103,7 +102,7 @@ const Comments = (props) => {
                 margin="normal"
               />
             }
-            className={classes.cardHeader}
+            // className={classes.cardHeader}
           />
         }
       />

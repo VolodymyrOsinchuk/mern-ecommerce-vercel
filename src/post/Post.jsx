@@ -28,6 +28,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Post = (props) => {
   const classes = useStyles();
+
+  const { token, user } = isAuthenticated();
+  const postId = props.post._id;
+  const userId = user._id;
+
+  const checkLike = (likes) => {
+    let match = likes.indexOf(user._id);
+    return match;
+  };
+
   const [values, setValues] = useState({
     like: checkLike(props.post.likes),
     likes: props.post.likes.length,
@@ -36,10 +46,6 @@ const Post = (props) => {
 
   console.log("isAuthenticated", isAuthenticated());
   console.log("props Post", props);
-
-  const { token, user } = isAuthenticated();
-  const postId = props.post._id;
-  const userId = user._id;
 
   const deletePost = () => {
     remove(postId, token).then((data) => {
@@ -53,11 +59,6 @@ const Post = (props) => {
 
   const updateComments = (comments) => {
     setValues({ ...values, comments: comments });
-  };
-
-  const checkLike = (like) => {
-    let match = likes.indexOf(user._id);
-    return match;
   };
 
   const clickLike = () => {
@@ -75,7 +76,7 @@ const Post = (props) => {
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar src={`${API}/api/users/photo/${props.post.postedBy._id}`} />
+          <Avatar src={`${API}/api/user/photo/${props.post.postedBy._id}`} />
         }
         action={
           props.post.postedBy._id === isAuthenticated().user._id && (
@@ -89,7 +90,7 @@ const Post = (props) => {
             {props.post.postedBy.name}
           </Link>
         }
-        subheader={new Date(props.post.created).toDateString()}
+        subheader={new Date(props.post.createdAt).toLocaleDateString()}
         className={classes.cardHeader}
       />
       <CardContent className={classes.cardContent}>
@@ -101,6 +102,7 @@ const Post = (props) => {
             <img
               className={classes.media}
               src={`${API}/api/posts/photo/${props.post._id}`}
+              alt="img de post"
             />
           </div>
         )}

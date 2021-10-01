@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Grid, makeStyles } from "@material-ui/core";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import himalayas from "../images/himalayas.jpg";
-import Newsfeed from "../post/NewPost";
+import Newsfeed from "../post/Newsfeed";
 import FindPeople from "../user/FindPeople";
 import { isAuthenticated } from "../auth/auth-helper";
 

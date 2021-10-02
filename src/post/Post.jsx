@@ -11,19 +11,41 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { isAuthenticated } from "../auth/auth-helper";
-import { Comment, Delete, Favorite, FavoriteBorder } from "@material-ui/icons";
+import { Comment, Delete, Favorite } from "@material-ui/icons";
 import { remove, like, unlike } from "./api-post";
+import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import { API } from "../config";
 import Comments from "./Comments";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  cardHeader: {},
-  cardContent: {},
-  text: {},
-  photo: {},
-  media: {},
-  button: {},
+  card: {
+    maxWidth: 600,
+    margin: "auto",
+    marginBottom: theme.spacing(3),
+    backgroundColor: "rgba(0, 0, 0 ,0.06)",
+  },
+  cardHeader: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+  },
+  cardContent: {
+    backgroundColor: "white",
+    padding: `${theme.spacing(2)}px 0px`,
+  },
+  text: {
+    margin: theme.spacing(2),
+  },
+  photo: {
+    textAlign: "center",
+    backgroundColor: "#f2f5f4",
+    padding: theme.spacing(1),
+  },
+  media: {
+    height: 200,
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
 }));
 
 const Post = (props) => {
@@ -44,11 +66,12 @@ const Post = (props) => {
     comments: props.post.comments,
   });
 
-  console.log("isAuthenticated", isAuthenticated());
-  console.log("props Post", props);
+  // console.log("isAuthenticated", isAuthenticated());
+  // console.log("props Post", props);
 
   const deletePost = () => {
     remove(postId, token).then((data) => {
+      console.log("data deletepost", data);
       if (data.error) {
         console.log("data error deletepost", data.error);
       } else {
@@ -73,7 +96,7 @@ const Post = (props) => {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.card}>
       <CardHeader
         avatar={
           <Avatar src={`${API}/api/user/photo/${props.post.postedBy._id}`} />
@@ -86,7 +109,7 @@ const Post = (props) => {
           )
         }
         title={
-          <Link to={`/user/${props.post.postedBy._id}`}>
+          <Link to={`/profile/${props.post.postedBy._id}`}>
             {props.post.postedBy.name}
           </Link>
         }
@@ -109,16 +132,30 @@ const Post = (props) => {
       </CardContent>
       <CardActions>
         {values.like ? (
-          <IconButton onClick={clickLike} className={classes.button}>
+          <IconButton
+            onClick={clickLike}
+            className={classes.button}
+            aria-label="Like"
+            color="secondary"
+          >
             <Favorite />
           </IconButton>
         ) : (
-          <IconButton onClick={clickLike} className={classes.button}>
+          <IconButton
+            onClick={clickLike}
+            aria-label="Unlike"
+            className={classes.button}
+            color="secondary"
+          >
             <FavoriteBorder />
           </IconButton>
         )}
         <span>{values.likes}</span>
-        <IconButton>
+        <IconButton
+          aria-label="Comment"
+          className={classes.button}
+          color="secondary"
+        >
           <Comment />
         </IconButton>
         <span>{values.comments.length}</span>

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Post from "./Post";
 
 const PostList = (props) => {
-  console.log("postlist props", props);
+  // console.log("postlist props", props);
   return (
     <div style={{ marginTop: "24px" }}>
       {props.posts.map((item, i) => {

@@ -75,7 +75,7 @@ const Profile = ({ match }) => {
 
   const loadPosts = (user) => {
     listByUser({ userId: user }, token).then((data) => {
-      console.log("data loadPosts >>>> ", data);
+      // console.log("data loadPosts >>>> ", data);
       if (data.error) {
         console.log("data.error loadPosts", data.error);
       } else {
@@ -106,7 +106,7 @@ const Profile = ({ match }) => {
   };
 
   // const following = checkFollow(user);
-  console.log("values.user", values.user);
+  // console.log("values.user", values.user);
   const checkFollow = (user) => {
     const match = user.followers.some((follower) => {
       return follower._id === userId;

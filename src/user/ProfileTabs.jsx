@@ -5,7 +5,7 @@ import FollowGrid from "./FollowGrid";
 import PostList from "../post/PostList";
 
 const ProfileTabs = (props) => {
-  console.log("ProfileTabs props", props);
+  // console.log("ProfileTabs props", props);
   const [tab, setTab] = useState(0);
 
   const handleChange = (event, value) => {

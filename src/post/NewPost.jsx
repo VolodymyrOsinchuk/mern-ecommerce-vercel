@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NewPost = (props) => {
-  console.log("props NewPost >>> ", props);
+  // console.log("props NewPost >>> ", props);
   const classes = useStyles();
   const [values, setValues] = useState({
     text: "",

@@ -28,9 +28,9 @@ const Newsfeed = () => {
     user: { _id },
   } = isAuthenticated();
   const userId = _id;
-  console.log("Newsfeed token", token);
-  console.log("Newsfeed userId", userId);
-  console.log("Newsfeed posts", posts);
+  // console.log("Newsfeed token", token);
+  // console.log("Newsfeed userId", userId);
+  // console.log("Newsfeed posts", posts);
 
   useEffect(() => {
     const abortController = new AbortController();

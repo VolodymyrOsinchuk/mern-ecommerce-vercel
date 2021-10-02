@@ -122,7 +122,7 @@ const unfollow = async (userId, token, unfollowId) => {
 };
 
 const findPeople = async (userId, token, signal) => {
-  console.log("findPeople >>>>", userId, token, signal);
+  // console.log("findPeople >>>>", userId, token, signal);
   try {
     let response = await fetch(`${API}/api/user/findpeople/${userId}`, {
       method: "GET",
@@ -135,7 +135,7 @@ const findPeople = async (userId, token, signal) => {
     });
     return await response.json();
   } catch (err) {
-    console.error("unfollow error: " + err.message);
+    console.error("findPeople error: " + err.message);
   }
 };
 

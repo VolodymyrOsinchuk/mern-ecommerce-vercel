@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Home = ({ history }) => {
-  console.log("Home history", history);
+  // console.log("Home history", history);
   const classes = useStyles();
   const [defaultPage, setDefaultPage] = useState(false);
 

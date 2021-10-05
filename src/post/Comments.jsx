@@ -79,13 +79,11 @@ const Comments = (props) => {
   const commentBody = (item) => {
     return (
       <p className={classes.commentText}>
-        <Link to={`${API}/user/${item.postedBy._id}`}>
-          {item.postedBy.name}
-        </Link>
+        <Link to={`/profile/${item.postedBy._id}`}>{item.postedBy.name}</Link>
         <br />
         {item.text}
         <span className={classes.commentDate}>
-          {new Date(item.created).toDateString()}
+          {new Date(item.created).toLocaleDateString(undefined)}
           {isAuthenticated().user._id === item.postedBy._id && (
             <Icon
               onClick={deleteComment(item)}
@@ -128,7 +126,7 @@ const Comments = (props) => {
             avatar={
               <Avatar
                 className={classes.smallAvatar}
-                src={`${API}/api/user/photo/${_id}`}
+                src={`${API}/api/user/photo/${item.postedBy._id}`}
               />
             }
             title={commentBody(item)}
@@ -146,5 +144,4 @@ Comments.propTypes = {
   comments: PropTypes.array.isRequired,
   updateComments: PropTypes.func.isRequired,
 };
-
 export default Comments;

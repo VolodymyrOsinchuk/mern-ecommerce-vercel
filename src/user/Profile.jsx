@@ -106,7 +106,7 @@ const Profile = ({ match }) => {
   };
 
   // const following = checkFollow(user);
-  // console.log("values.user", values.user);
+  console.log("values.user", values.user);
   const checkFollow = (user) => {
     const match = user.followers.some((follower) => {
       return follower._id === userId;
@@ -162,7 +162,7 @@ const Profile = ({ match }) => {
         <ListItem>
           <ListItemText
             primary={`Rejoint: ${new Date(
-              values.user.created
+              values.user.createdAt
             ).toLocaleDateString()} `}
           />
         </ListItem>

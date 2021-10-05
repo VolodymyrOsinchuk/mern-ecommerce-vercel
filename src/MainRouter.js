@@ -15,11 +15,11 @@ const MainRouter = () => {
       <Menu />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/users" component={Users} />
+        <PrivateRoute path="/users" component={Users} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <PrivateRoute path="/profile/edit/:userId" component={EditProfile} />
-        <Route path="/profile/:userId" component={Profile} />
+        <PrivateRoute path="/profile/:userId" component={Profile} />
       </Switch>
     </div>
   );

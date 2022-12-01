@@ -14,3 +14,7 @@ git branch -M main
 git push -u origin main
 
 npx browserslist@latest --update-db
+
+### vercel_token
+
+01jxeH49uRuojotd29kYFAy5
